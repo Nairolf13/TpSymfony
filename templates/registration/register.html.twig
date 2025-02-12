@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto mt-10 bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold mb-6 text-gray-700">Please sign up</h1>
+
+        {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+            {{ form_row(registrationForm.email, {
+                'label': 'Email',
+                'label_attr': {'class': 'block text-sm font-medium text-gray-700'},
+                'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500', 'required': true}
+            }) }}
+            {{ form_row(registrationForm.firstName, {
+                'label': 'First Name',
+                'label_attr': {'class': 'block text-sm font-medium text-gray-700'},
+                'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500', 'required': true}
+            }) }}
+            {{ form_row(registrationForm.lastName, {
+                'label': 'Last Name',
+                'label_attr': {'class': 'block text-sm font-medium text-gray-700'},
+                'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500', 'required': true}
+            }) }}
+            {{ form_row(registrationForm.plainPassword, {
+                'label': 'Password',
+                'label_attr': {'class': 'block text-sm font-medium text-gray-700'},
+                'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500', 'required': true}
+            }) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}">
+            <button type="submit" class="mt-6 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

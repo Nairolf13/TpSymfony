@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="max-w-md mx-auto mt-10">
+            <h1 class="text-2xl font-bold mb-6 text-gray-700">Demande de Congé</h1>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div>
+                <label for="startDate" class="block text-sm font-medium text-gray-700">Date de début</label>
+                {{ form_widget(form.startDate, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            </div>
+            <div>
+                <label for="endDate" class="block text-sm font-medium text-gray-700">Date de fin</label>
+                {{ form_widget(form.endDate, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            </div>
+            <div>
+                <label for="reason" class="block text-sm font-medium text-gray-700">Raison</label>
+                {{ form_widget(form.reason, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('leave_request') }}">
+            <button type="submit" class="mt-6 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Soumettre</button>
+        
+        {{ form_end(form) }}
+    </div>
+    <div class="max-w-md mx-auto mt-10">
+        <h1 class="text-2xl font-bold mb-6 text-gray-700">Mes demandes de Congé</h1>
+        <ul class="divide-y divide-gray-200">
+            {% for leaveRequest in leaveRequests %}
+                <li class="py-4">
+                    <div class="flex justify-between">
+                        <h2 class="text-lg font-semibold text-gray-800">
+                            {{ leaveRequest.StartDate|date('d/m/Y') }} - {{ leaveRequest.EndDate|date('d/m/Y') }}
+                        </h2>
+                        <p class="font-bold 
+                            {% if leaveRequest.Status.value == 'Approved' %}
+                                text-green-600
+                            {% elseif leaveRequest.Status.value == 'Rejected' %}
+                                text-red-600
+                            {% elseif leaveRequest.Status.value == 'Submitted' %}
+                                text-orange-600
+                            {% elseif leaveRequest.Status.value == 'Draft' %}
+                                text-gray-500
+                            {% endif %}
+                        ">
+                            {{ leaveRequest.Status.value }}
+                        </p>
+                    </div>
+                    <p class="text-gray-600 mb-2">{{ leaveRequest.Reason }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -29,7 +29,7 @@ class LeaveRequest
 
     #[ORM\ManyToOne(inversedBy: 'leaveRequests')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $_user = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -86,12 +86,12 @@ class LeaveRequest
 
     public function getUser(): ?User
     {
-        return $this->_user;
+        return $this->user;
     }
 
-    public function setUser(?User $_user): static
+    public function setUser(?User $user): static
     {
-        $this->_user = $_user;
+        $this->user = $user;
 
         return $this;
     }
